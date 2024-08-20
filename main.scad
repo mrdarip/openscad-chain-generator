@@ -23,24 +23,23 @@ module square_chain(gap, height, width, length)
 module circle_square_chain(gap, height, width, radius, length)
 {
     for (i = [0:length - 1]) {
-        rotate([ 0, 0, i * radius ])
-        
-
         scale([ 1, i % 2 == 0 ? 1 : -1, 1 ])
 
-        place_square_link(gap, height, width, radius, i);
+        for(j = [0:i])
+        {
+            translate(
+                [
+                    (thickness * 2 + gap * 2 ) * i,
+                    i % 2 ==0? 0:(2*thickness + gap),
+                    0
+                ])
+            rotate([0,0,radius])
+        }
+
+        square_link(gap, height, width);
     }
 }
 
-module place_square_link(gap, height, width, r, step)
-{
-    c = gap * 3 + width * 4;
-
-    //c=2{R}{\sin{\frac{\alpha}{2}}}
-    angle = 2 * asin(c/ (2 * r));
-    translate([ cos(angle), sin(angle), 0 ])
-    square_link(gap, height, width);
-}
 
 module square_link(gap, height, width)
 {
