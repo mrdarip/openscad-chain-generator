@@ -1,9 +1,9 @@
 gap = 0.35;
 height = 1.25;
 width = 1;
-rotation = 1000;
+rotation = 4;
 
-circle_square_chain(gap, height, width, rotation, 5);
+circle_square_chain(gap, height, width, rotation, 50);
 
 module square_chain(gap, height, width, length)
 {
@@ -20,24 +20,20 @@ module square_chain(gap, height, width, length)
     }
 }
 
-module circle_square_chain(gap, height, width, radius, length)
+module circle_square_chain(gap, height, width, rotation, length)
 {
-    for (i = [0:length - 1]) {
-        scale([ 1, i % 2 == 0 ? 1 : -1, 1 ])
-
-        for(j = [0:i])
-        {
-            translate(
-                [
-                    (thickness * 2 + gap * 2 ) * i,
-                    i % 2 ==0? 0:(2*thickness + gap),
+    if (length > 0) {
+        square_link(gap, height, width);
+        translate([
+                    (width*2 +gap*2 ),
+                    2*width + 2*gap,
                     0
                 ])
-            rotate([0,0,radius])
-        }
-
-        square_link(gap, height, width);
+        rotate([0,0,rotation])
+        scale([ 1, -1, 1 ])
+        circle_square_chain(gap, height, width, -rotation, length-1);
     }
+    
 }
 
 
