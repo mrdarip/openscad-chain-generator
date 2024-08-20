@@ -3,7 +3,7 @@ height = 1.25;
 width = 1;
 rotation = 4;
 
-circle_square_chain(gap, height, width, rotation, 50);
+circle_square_chain2(gap, height, width, rotation,0.0034, 500);
 
 module square_chain(gap, height, width, length)
 {
@@ -33,7 +33,21 @@ module circle_square_chain(gap, height, width, rotation, length)
         scale([ 1, -1, 1 ])
         circle_square_chain(gap, height, width, -rotation, length-1);
     }
-    
+}
+
+module circle_square_chain2(gap, height, width, from, augmention,length)
+{
+    if (length > 0) {
+        square_link(gap, height, width);
+        translate([
+                    (width*2 +gap*2 ),
+                    2*width + 2*gap,
+                    0
+                ])
+        rotate([0,0,from])
+        scale([ 1, -1, 1 ])
+        circle_square_chain2(gap, height, width, -from+augmention, -augmention, length-1);
+    }
 }
 
 
