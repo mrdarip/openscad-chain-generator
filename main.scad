@@ -1,41 +1,42 @@
-gap = 2;
-thickness = 10;
+gap = 0.35;
+height = 1.25;
+width = 1;
 
-square_chain(gap, thickness, 5);
+square_chain(gap, height, width, 10);
 
-module square_chain(gap, thickness, length)
+module square_chain(gap, height, width, length)
 {
     for (i = [0:length - 1]) {
         translate([
-            (thickness * 2 + gap * 2) * i,
-            i % 2 == 0 ? 0 : (2 * thickness + gap),
+            (width * 2 + gap * 2) * i,
+            i % 2 == 0 ? 0 : (2 * height + gap),
             0
         ]) scale([ 1, i % 2 == 0 ? 1 : -1, 1 ])
         {
-            square_link(gap, thickness);
+            square_link(gap, height, width);
         }
     }
 }
 
-module square_link(gap, thickness)
+module square_link(gap, height, width)
 {
     union()
     {
-        cube([ thickness * 4 + gap * 3, thickness, thickness ]);
+        cube([ width * 4 + gap * 3, height, height ]);
 
-        translate([ 0, thickness + gap, thickness * 2 + gap ])
-          cube([ thickness * 4 + gap * 3, thickness, thickness ]);
+        translate([ 0, height + gap, height * 2 + gap ])
+          cube([ width * 4 + gap * 3, height, height ]);
 
-        translate([ 0, 0, thickness ])
+        translate([ 0, 0, height ])
         {
-            square_pilar(gap, thickness);
-            translate([ thickness * 3 + gap * 3, 0, 0 ])
-              square_pilar(gap, thickness);
+            square_pilar(gap, height, width);
+            translate([ width * 3 + gap * 3, 0, 0 ])
+              square_pilar(gap, height, width);
         }
     }
 }
 
-module square_pilar(gap, thickness)
+module square_pilar(gap, height, width)
 {
     multmatrix(m =
                  [
@@ -45,5 +46,5 @@ module square_pilar(gap, thickness)
                      [ 0, 0, 0, 1 ]
                  ])
 
-      cube([ thickness, thickness, thickness + gap ]);
+      cube([ width, height, height + gap ]);
 }
