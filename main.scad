@@ -3,7 +3,7 @@ height = 1.25;
 width = 1;
 rotation = 4;
 
-circle_square_chain3(gap, height, width, rotation,0.0035,0.000005, 100);
+square_chain(gap, height, width,  100);
 
 module square_chain(gap, height, width, length)
 {
